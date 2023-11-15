@@ -14,7 +14,7 @@ namespace bateau.DAL
             // attributs de connexion statiques
             private static string provider = "localhost";
 
-            private static string dataBase = "entreprise";
+            private static string dataBase = "bateau";
 
             private static string uid = "root";
 

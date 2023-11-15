@@ -35,10 +35,11 @@
             // 
             this.listBoxSecteur.FormattingEnabled = true;
             this.listBoxSecteur.ItemHeight = 16;
-            this.listBoxSecteur.Location = new System.Drawing.Point(56, 43);
+            this.listBoxSecteur.Location = new System.Drawing.Point(30, 43);
             this.listBoxSecteur.Name = "listBoxSecteur";
-            this.listBoxSecteur.Size = new System.Drawing.Size(120, 84);
+            this.listBoxSecteur.Size = new System.Drawing.Size(303, 292);
             this.listBoxSecteur.TabIndex = 0;
+            this.listBoxSecteur.SelectedIndexChanged += new System.EventHandler(this.listBoxSecteur_SelectedIndexChanged);
             // 
             // Form1
             // 

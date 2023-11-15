@@ -18,5 +18,10 @@ namespace bateau.Modele
             this.id = unId;
             this.libelle = unLibelle; 
         }
+        // pour afficher la liste par la suite
+        public string Description
+        {
+            get => "Id : " + this.id + " Libelle :" + this.libelle;
+        }
     }
 }
