@@ -14,7 +14,7 @@ namespace bateau.DAL
         // attributs de connexion statiques
         private static string provider = "localhost";
 
-        private static string dataBase = "bateau";
+        private static string dataBase = "sicilylines";
 
         private static string uid = "root";
 
@@ -28,9 +28,8 @@ namespace bateau.DAL
         private static MySqlCommand Ocom;
 
 
-        // Mise à jour d'un employé
-
-        public static void updateSecteur(Secteur s)
+        //Suppression d'un secteur
+        public static void deleteSecteur(Secteur e)
         {
 
             try
@@ -42,8 +41,8 @@ namespace bateau.DAL
 
                 maConnexionSql.openConnection();
 
-
-                Ocom = maConnexionSql.reqExec("update secteur set libelle= '" + s.Libelle + "' where id = " + s.Id);
+                
+                Ocom = maConnexionSql.reqExec("delete from secteur where id = " + e.Id);
 
 
                 int i = Ocom.ExecuteNonQuery();
@@ -56,20 +55,21 @@ namespace bateau.DAL
 
             }
 
-            catch (Exception emp)
+            catch (Exception unSecteur)
             {
 
-                throw (emp);
+                throw (unSecteur);
             }
 
 
         }
+        
 
-        // Récupération de la liste des employés
+        // Récupération de la liste des secteur
         public static List<Secteur> getSecteur()
         {
 
-            List<Secteur> ls = new List<Secteur>();
+            List<Secteur> lc = new List<Secteur>();
 
             try
             {
@@ -80,12 +80,12 @@ namespace bateau.DAL
                 maConnexionSql.openConnection();
 
 
-                Ocom = maConnexionSql.reqExec("Select * from secteur");
+                Ocom = maConnexionSql.reqExec("Select * from Secteur");
 
 
                 MySqlDataReader reader = Ocom.ExecuteReader();
 
-                Secteur s;
+                Secteur e;
 
 
 
@@ -93,14 +93,14 @@ namespace bateau.DAL
                 while (reader.Read())
                 {
 
-                    int id = (int)reader.GetValue(0);
-                    string libelle = (string)reader.GetValue(1);
+                    int numero = (int)reader.GetValue(0);
+                    string nom = (string)reader.GetValue(1);
 
                     //Instanciation d'un Emplye
-                    s = new Secteur(id, libelle);
+                    e = new Secteur(numero, nom);
 
                     // Ajout de cet employe à la liste 
-                    ls.Add(s);
+                    lc.Add(e);
 
 
                 }
@@ -112,15 +112,15 @@ namespace bateau.DAL
                 maConnexionSql.closeConnection();
 
                 // Envoi de la liste au Manager
-                return (ls);
+                return (lc);
 
 
             }
 
-            catch (Exception emp)
+            catch (Exception unSecteur)
             {
 
-                throw (emp);
+                throw (unSecteur);
 
             }
 

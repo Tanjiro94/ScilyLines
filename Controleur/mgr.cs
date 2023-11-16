@@ -8,27 +8,27 @@ using System.Threading.Tasks;
 
 namespace bateau.Controleur
 {
-    public class mgr
+    public class Mgr
     {
-        SecteurDAO SDAO = new SecteurDAO();  // Création d'une instance de la classe EmployeDAO.
+        DAL.SecteurDAO empDAO = new DAL.SecteurDAO();
 
-        List<Secteur> maListeSecteur;  // Déclaration d'une liste de type Employe appelée maListeEmploye.
+        List<Modele.Secteur> maListeSecteur;
 
-        public mgr()  // Constructeur de la classe Mgr.
+        public Mgr()
         {
-            maListeSecteur = new List<Secteur>();  // Initialisation de maListeEmploye en créant une nouvelle liste vide.
+
+            maListeSecteur = new List<Modele.Secteur>();
         }
 
-        public List<Secteur> chargementEmpBD()  // Déclaration d'une méthode publique qui retourne une liste d'employés.
-        {
-            maListeSecteur = SecteurDAO.getSecteur();  // Appel de la méthode getEmployes() de la classe EmployeDAO pour charger la liste d'employés depuis la DAL.
-            return (maListeSecteur);  // Retour de la liste d'employés chargée.
-        }
 
-        // Mise à jour d'un employé dans la DAL
-        public void updateEmploye(Secteur s)  // Déclaration d'une méthode publique pour mettre à jour un employé.
+
+        // Récupération de la liste des secteurs à partir de la DAL
+        public List<Secteur> chargementEmpBD()
         {
-            SecteurDAO.updateSecteur(s);  // Appel de la méthode updateEmploye() de la classe EmployeDAO pour effectuer la mise à jour de l'employé dans la DAL.
+
+            maListeSecteur = SecteurDAO.getSecteur();
+
+            return (maListeSecteur);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bateau.Modele
 {
-    public class Secteur
+    public class Port
     {
         private int id;
         private string nom;
@@ -19,17 +19,17 @@ namespace bateau.Modele
         public int Id { get => id; }
 
 
-        public Secteur(int unId, string unNom)
+        public Port(int unId, string unNom)
         {
             this.id = unId;
             this.nom = unNom;
         }
-        public Secteur(string unNom)
+        public Port(string unNom)
         {
             this.nom = unNom;
         }
         // Constructeur vide
-        public Secteur()
+        public Port()
         {
 
 

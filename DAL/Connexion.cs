@@ -36,14 +36,14 @@ namespace bateau.Modele
                 {
                     mysqlCn = new MySqlConnection(connString);
                 }
-                catch (Exception emp)
+                catch (Exception unSecteur)
                 {
-                    throw (emp);
+                    throw (unSecteur);
                 }
             }
-            catch (Exception emp)
+            catch (Exception unSecteur)
             {
-                throw (emp);
+                throw (unSecteur);
             }
 
 
@@ -72,9 +72,9 @@ namespace bateau.Modele
                     }
 
                 }
-                catch (Exception emp)
+                catch (Exception unSecteur)
                 {
-                    throw (emp);
+                    throw (unSecteur);
 
 
                 }
@@ -96,9 +96,9 @@ namespace bateau.Modele
             {
                 mysqlCn.Open();
             }
-            catch (Exception emp)
+            catch (Exception unSecteur)
             {
-                throw (emp);
+                throw (unSecteur);
             }
         }
 

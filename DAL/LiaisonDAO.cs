@@ -14,7 +14,7 @@ namespace bateau.DAL
         // attributs de connexion statiques
         private static string provider = "localhost";
 
-        private static string dataBase = "bateau";
+        private static string dataBase = "sicilylines";
 
         private static string uid = "root";
 
@@ -28,14 +28,65 @@ namespace bateau.DAL
         private static MySqlCommand Ocom;
 
 
-        // Mise à jour d'un employé
-
-        public static void updateLiaison(Liaison l)
+        //Afficher les liaisons
+        public static List<Liaison> GetLiaison(int idSecteur)
         {
 
             try
             {
+                List<Liaison> list = new List<Liaison>();
+                Liaison _liaison = new Liaison();
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
 
+
+                maConnexionSql.openConnection();
+
+
+                Ocom = maConnexionSql.reqExec("Select * from liaison where idSecteur = " + idSecteur + "+1");
+
+
+                MySqlDataReader reader1 = Ocom.ExecuteReader();
+
+
+
+                while (reader1.Read())
+                {
+
+                    int _idLiaison = (int)reader1.GetValue(0);
+                    string _duree = (string)reader1.GetValue(1);
+                    int idPortDepart = (int)reader1.GetValue(2);
+                    int idPortArrivee = (int)reader1.GetValue(3);
+                    int _idSecteur = (int)reader1.GetValue(4);
+
+                    _liaison = new Liaison(_idLiaison, _duree, idPortDepart, idPortArrivee, _idSecteur);
+
+                    //Chaque objet ajouter inséré dans la liste
+                    list.Add(_liaison);
+                }
+
+
+
+                reader1.Close();
+
+                maConnexionSql.closeConnection();
+
+
+                return (list);
+
+            }
+
+            catch (Exception uneLiaison)
+            {
+
+                throw (uneLiaison);
+            }
+        }
+
+        //Supprimer liaison
+        public static void deleteLiaison(Liaison l)
+        {
+            try
+            {
 
                 maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
 
@@ -43,16 +94,12 @@ namespace bateau.DAL
                 maConnexionSql.openConnection();
 
 
-                Ocom = maConnexionSql.reqExec("update liaison set duree= '" + l.Duree + "' where id = " + l.Id);
+                Ocom = maConnexionSql.reqExec("DELETE from liaison where id=" + l);
 
 
                 int i = Ocom.ExecuteNonQuery();
 
-
-
                 maConnexionSql.closeConnection();
-
-
 
             }
 
@@ -61,101 +108,23 @@ namespace bateau.DAL
 
                 throw (emp);
             }
-
-
         }
-        public static List<Liaison> getLiaisonsBySecteur(int secteurId)
+        //Modifier liaison
+        public static void modifLiaison(int idLiaison, string duree)
         {
-            List<Liaison> ll = new List<Liaison>();
-
-            try
-            {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-
-
-                maConnexionSql.openConnection();
-
-
-                Ocom = maConnexionSql.reqExec("SELECT * FROM liaison WHERE id_secteur = @secteurId");
-
-
-                MySqlDataReader reader = Ocom.ExecuteReader();
-
-                Liaison l;
-
-                while (reader.Read())
-                {
-                    int id = (int)reader.GetValue(0);
-                    string duree = (string)reader.GetValue(1);
-
-                    // Instanciation d'une liaison
-                    l = new Liaison(id, duree);
-
-                    // Ajout de cette liaison à la liste 
-                    ll.Add(l);
-                }
-
-                reader.Close();
-                maConnexionSql.closeConnection();
-
-                // Retourner la liste des liaisons pour ce secteur
-                return ll;
-            }
-            catch (Exception emp)
-            {
-                throw (emp);
-            }
-        }
-        // Récupération de la liste des employés
-        public static List<Liaison> getLiaison()
-        {
-
-            List<Liaison> ll = new List<Liaison>();
-
             try
             {
 
                 maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
 
-
                 maConnexionSql.openConnection();
 
-
-                Ocom = maConnexionSql.reqExec("Select * from liaison");
-
-
-                MySqlDataReader reader = Ocom.ExecuteReader();
-
-                Liaison l;
+                Ocom = maConnexionSql.reqExec("update liaison set duree = '" + duree + "' where id = " + idLiaison);
 
 
-
-
-                while (reader.Read())
-                {
-
-                    int id = (int)reader.GetValue(0);
-                    string duree = (string)reader.GetValue(1);
-
-
-                    //Instanciation d'un Emplye
-                    l = new Liaison(id, duree);
-
-                    // Ajout de cet employe à la liste 
-                    ll.Add(l);
-
-
-                }
-
-
-
-                reader.Close();
+                int i = Ocom.ExecuteNonQuery();
 
                 maConnexionSql.closeConnection();
-
-                // Envoi de la liste au Manager
-                return (ll);
-
 
             }
 
@@ -163,8 +132,34 @@ namespace bateau.DAL
             {
 
                 throw (emp);
+            }
+        }
+
+        //Modifier liaison
+        public static void ajoutLiaison(string duree, int monPortDepart, int monPortArrivee, int idSecteur)
+        {
+            try
+            {
+
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+
+                maConnexionSql.openConnection();
+                String sqlReq = "INSERT INTO liaison(duree, port_depart, port_arrivee, idSecteur) VALUES('" + duree + "'," + monPortDepart + "," + monPortArrivee + "," + idSecteur + ");";
+                Ocom = maConnexionSql.reqExec(sqlReq);
+                Console.WriteLine(sqlReq);
+
+                int i = Ocom.ExecuteNonQuery();
+
+                maConnexionSql.closeConnection();
 
             }
+
+            catch (Exception emp)
+            {
+
+                throw (emp);
+            }
+
 
 
         }
