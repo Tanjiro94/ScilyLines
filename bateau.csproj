@@ -98,10 +98,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controleur\mgr.cs" />
+    <Compile Include="Controleur\Mgr.cs" />
     <Compile Include="DAL\BateauDAO.cs" />
     <Compile Include="DAL\Connexion.cs" />
+    <Compile Include="DAL\LiaisonDAO.cs" />
+    <Compile Include="DAL\PortDAO.cs" />
+    <Compile Include="DAL\SecteurDAO.cs" />
     <Compile Include="Modele\Liaison.cs" />
+    <Compile Include="Modele\Port.cs" />
     <Compile Include="Modele\Secteur.cs" />
     <Compile Include="Vue\Form1.cs">
       <SubType>Form</SubType>
