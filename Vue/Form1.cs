@@ -100,29 +100,27 @@ namespace bateau
 
         private void btnSupLiaison_Click(object sender, EventArgs e)
         {
-            //Supprimer
             try
             {
+                // Vérifier si un élément est sélectionné dans listBoxLiaison
+                if (listBoxLiaison.SelectedItem != null)
+                {
+                    Liaison uneLiaison = (Liaison)listBoxLiaison.SelectedItem;
 
-                Secteur unSecteur = (Secteur)listBoxSecteur.SelectedItem;
-                //La classe SecteurDAO utilise la méthode deleteSecteur qui va chercher dans la liste des secteurs
-                SecteurDAO.deleteSecteur(unSecteur);
-                
+                    // Utiliser l'ID de la liaison sélectionnée pour la supprimer
+                    LiaisonDAO.deleteLiaison(uneLiaison.IdLiaison);
 
-
-                //Utilisation de la BDD
-                lSecteur = monManager.chargementEmpBD();
-                listBoxSecteur.SelectedIndex = 0;
-                //Affiche le résultat
-                affiche();
-
+                    // Mettre à jour l'affichage ou effectuer d'autres opérations nécessaires
+                    affiche();
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez sélectionner une liaison à supprimer.");
+                }
             }
-
             catch (Exception ex)
             {
-                //Si marche pas, il affichera l'erreur
                 MessageBox.Show(ex.Message);
-
             }
         }
 

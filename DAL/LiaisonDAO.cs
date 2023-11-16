@@ -1,4 +1,4 @@
-﻿using bateau.Modele;
+﻿using bateau.Modele; // Importe l'espace de noms bateau.Modele pour utiliser la classe ConnexionSql
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -10,48 +10,34 @@ namespace bateau.DAL
 {
     public class LiaisonDAO
     {
-
-        // attributs de connexion statiques
+        // Attributs de connexion statiques
         private static string provider = "localhost";
-
         private static string dataBase = "sicilylines";
-
         private static string uid = "root";
-
         private static string mdp = "";
 
+        private static ConnexionSql maConnexionSql; // Instance de la classe de connexion
 
+        private static MySqlCommand Ocom; // Objet de commande SQL
 
-        private static ConnexionSql maConnexionSql;
-
-
-        private static MySqlCommand Ocom;
-
-
-        //Afficher les liaisons
+        // Méthode pour récupérer les liaisons en fonction de l'identifiant du secteur
         public static List<Liaison> GetLiaison(int idSecteur)
         {
-
             try
             {
-                List<Liaison> list = new List<Liaison>();
-                Liaison _liaison = new Liaison();
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                List<Liaison> list = new List<Liaison>(); // Liste des liaisons à retourner
+                Liaison _liaison = new Liaison(); // Objet liaison
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp); // Récupération de l'instance de connexion
 
+                maConnexionSql.openConnection(); // Ouverture de la connexion à la base de données
 
-                maConnexionSql.openConnection();
+                Ocom = maConnexionSql.reqExec("Select * from liaison where idSecteur = " + idSecteur + "+1"); // Exécution d'une requête SQL pour récupérer les liaisons du secteur
 
+                MySqlDataReader reader1 = Ocom.ExecuteReader(); // Exécution de la commande SQL et récupération des résultats dans un objet MySqlDataReader
 
-                Ocom = maConnexionSql.reqExec("Select * from liaison where idSecteur = " + idSecteur + "+1");
-
-
-                MySqlDataReader reader1 = Ocom.ExecuteReader();
-
-
-
-                while (reader1.Read())
+                while (reader1.Read()) // Parcourt les résultats
                 {
-
+                    // Récupération des données pour créer un nouvel objet Liaison
                     int _idLiaison = (int)reader1.GetValue(0);
                     string _duree = (string)reader1.GetValue(1);
                     int idPortDepart = (int)reader1.GetValue(2);
@@ -60,109 +46,82 @@ namespace bateau.DAL
 
                     _liaison = new Liaison(_idLiaison, _duree, idPortDepart, idPortArrivee, _idSecteur);
 
-                    //Chaque objet ajouter inséré dans la liste
+                    // Chaque objet ajouté est inséré dans la liste
                     list.Add(_liaison);
                 }
 
+                reader1.Close(); // Fermeture du lecteur après récupération des données
 
+                maConnexionSql.closeConnection(); // Fermeture de la connexion à la base de données
 
-                reader1.Close();
-
-                maConnexionSql.closeConnection();
-
-
-                return (list);
-
+                return (list); // Retourne la liste des liaisons récupérées
             }
-
             catch (Exception uneLiaison)
             {
-
-                throw (uneLiaison);
+                throw (uneLiaison); // En cas d'erreur, lance une exception
             }
         }
 
-        //Supprimer liaison
-        public static void deleteLiaison(Liaison l)
+        // Méthode pour supprimer une liaison en fonction de son identifiant
+        public static void deleteLiaison(int l)
         {
             try
             {
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp); // Récupération de l'instance de connexion
+                maConnexionSql.openConnection(); // Ouverture de la connexion à la base de données
 
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                Ocom = maConnexionSql.reqExec("DELETE from liaison where id=" + l); // Exécution d'une requête SQL pour supprimer une liaison en fonction de son ID
 
+                int i = Ocom.ExecuteNonQuery(); // Exécution de la commande SQL
 
-                maConnexionSql.openConnection();
-
-
-                Ocom = maConnexionSql.reqExec("DELETE from liaison where id=" + l);
-
-
-                int i = Ocom.ExecuteNonQuery();
-
-                maConnexionSql.closeConnection();
-
+                maConnexionSql.closeConnection(); // Fermeture de la connexion à la base de données
             }
-
             catch (Exception emp)
             {
-
-                throw (emp);
+                throw (emp); // En cas d'erreur, lance une exception
             }
         }
-        //Modifier liaison
+
+        // Méthode pour modifier la durée d'une liaison en fonction de son identifiant
         public static void modifLiaison(int idLiaison, string duree)
         {
             try
             {
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp); // Récupération de l'instance de connexion
+                maConnexionSql.openConnection(); // Ouverture de la connexion à la base de données
 
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                Ocom = maConnexionSql.reqExec("update liaison set duree = '" + duree + "' where id = " + idLiaison); // Exécution d'une requête SQL pour modifier la durée d'une liaison
 
-                maConnexionSql.openConnection();
+                int i = Ocom.ExecuteNonQuery(); // Exécution de la commande SQL
 
-                Ocom = maConnexionSql.reqExec("update liaison set duree = '" + duree + "' where id = " + idLiaison);
-
-
-                int i = Ocom.ExecuteNonQuery();
-
-                maConnexionSql.closeConnection();
-
+                maConnexionSql.closeConnection(); // Fermeture de la connexion à la base de données
             }
-
             catch (Exception emp)
             {
-
-                throw (emp);
+                throw (emp); // En cas d'erreur, lance une exception
             }
         }
 
-        //Modifier liaison
+        // Méthode pour ajouter une nouvelle liaison avec les détails fournis
         public static void ajoutLiaison(string duree, int monPortDepart, int monPortArrivee, int idSecteur)
         {
             try
             {
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp); // Récupération de l'instance de connexion
+                maConnexionSql.openConnection(); // Ouverture de la connexion à la base de données
 
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
-
-                maConnexionSql.openConnection();
+                // Construction de la requête SQL pour ajouter une nouvelle liaison
                 String sqlReq = "INSERT INTO liaison(duree, port_depart, port_arrivee, idSecteur) VALUES('" + duree + "'," + monPortDepart + "," + monPortArrivee + "," + idSecteur + ");";
-                Ocom = maConnexionSql.reqExec(sqlReq);
-                Console.WriteLine(sqlReq);
+                Ocom = maConnexionSql.reqExec(sqlReq); // Exécution de la requête SQL
 
-                int i = Ocom.ExecuteNonQuery();
+                int i = Ocom.ExecuteNonQuery(); // Exécution de la commande SQL
 
-                maConnexionSql.closeConnection();
-
+                maConnexionSql.closeConnection(); // Fermeture de la connexion à la base de données
             }
-
             catch (Exception emp)
             {
-
-                throw (emp);
+                throw (emp); // En cas d'erreur, lance une exception
             }
-
-
-
         }
-
     }
 }
