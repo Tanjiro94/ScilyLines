@@ -37,6 +37,6 @@ C:\Users\salah\OneDrive\Bureau\bateau\obj\Debug\bateau.Properties.Resources.reso
 C:\Users\salah\OneDrive\Bureau\bateau\obj\Debug\bateau.Form1.resources
 C:\Users\salah\OneDrive\Bureau\bateau\obj\Debug\bateau.csproj.GenerateResource.cache
 C:\Users\salah\OneDrive\Bureau\bateau\obj\Debug\bateau.csproj.CoreCompileInputs.cache
-C:\Users\salah\OneDrive\Bureau\bateau\obj\Debug\bateau.csproj.CopyComplete
 C:\Users\salah\OneDrive\Bureau\bateau\obj\Debug\bateau.exe
 C:\Users\salah\OneDrive\Bureau\bateau\obj\Debug\bateau.pdb
+C:\Users\salah\OneDrive\Bureau\bateau\obj\Debug\bateau.csproj.Up2Date

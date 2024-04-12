@@ -44,6 +44,8 @@
             this.labelPortDepart = new System.Windows.Forms.Label();
             this.inputAjoutLiaisonDuree = new System.Windows.Forms.TextBox();
             this.labelAjoutLiaison = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.listBoxTraversee = new System.Windows.Forms.ListBox();
             this.groupBoxModifDuree.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBoxAjoutLiaison.SuspendLayout();
@@ -55,7 +57,7 @@
             this.listBoxSecteur.ItemHeight = 16;
             this.listBoxSecteur.Location = new System.Drawing.Point(30, 27);
             this.listBoxSecteur.Name = "listBoxSecteur";
-            this.listBoxSecteur.Size = new System.Drawing.Size(510, 180);
+            this.listBoxSecteur.Size = new System.Drawing.Size(210, 180);
             this.listBoxSecteur.TabIndex = 0;
             this.listBoxSecteur.SelectedIndexChanged += new System.EventHandler(this.listBoxSecteur_SelectedIndexChanged);
             // 
@@ -63,9 +65,9 @@
             // 
             this.listBoxLiaison.FormattingEnabled = true;
             this.listBoxLiaison.ItemHeight = 16;
-            this.listBoxLiaison.Location = new System.Drawing.Point(557, 27);
+            this.listBoxLiaison.Location = new System.Drawing.Point(302, 27);
             this.listBoxLiaison.Name = "listBoxLiaison";
-            this.listBoxLiaison.Size = new System.Drawing.Size(566, 180);
+            this.listBoxLiaison.Size = new System.Drawing.Size(273, 180);
             this.listBoxLiaison.TabIndex = 1;
             this.listBoxLiaison.SelectedIndexChanged += new System.EventHandler(this.listBoxLiaison_SelectedIndexChanged);
             // 
@@ -74,7 +76,7 @@
             this.groupBoxModifDuree.Controls.Add(this.btnModifDuree);
             this.groupBoxModifDuree.Controls.Add(this.textBoxDureeLiaison);
             this.groupBoxModifDuree.Controls.Add(this.label1);
-            this.groupBoxModifDuree.Location = new System.Drawing.Point(30, 223);
+            this.groupBoxModifDuree.Location = new System.Drawing.Point(30, 291);
             this.groupBoxModifDuree.Name = "groupBoxModifDuree";
             this.groupBoxModifDuree.Size = new System.Drawing.Size(200, 215);
             this.groupBoxModifDuree.TabIndex = 2;
@@ -110,7 +112,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.btnSupLiaison);
-            this.groupBox2.Location = new System.Drawing.Point(245, 223);
+            this.groupBox2.Location = new System.Drawing.Point(245, 291);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(200, 215);
             this.groupBox2.TabIndex = 3;
@@ -136,7 +138,7 @@
             this.groupBoxAjoutLiaison.Controls.Add(this.labelPortDepart);
             this.groupBoxAjoutLiaison.Controls.Add(this.inputAjoutLiaisonDuree);
             this.groupBoxAjoutLiaison.Controls.Add(this.labelAjoutLiaison);
-            this.groupBoxAjoutLiaison.Location = new System.Drawing.Point(451, 223);
+            this.groupBoxAjoutLiaison.Location = new System.Drawing.Point(463, 300);
             this.groupBoxAjoutLiaison.Name = "groupBoxAjoutLiaison";
             this.groupBoxAjoutLiaison.Size = new System.Drawing.Size(637, 215);
             this.groupBoxAjoutLiaison.TabIndex = 4;
@@ -160,6 +162,7 @@
             this.selectPortArrivee.Name = "selectPortArrivee";
             this.selectPortArrivee.Size = new System.Drawing.Size(222, 24);
             this.selectPortArrivee.TabIndex = 5;
+            this.selectPortArrivee.SelectedIndexChanged += new System.EventHandler(this.selectPortArrivee_SelectedIndexChanged);
             // 
             // labelPortArrivee
             // 
@@ -205,11 +208,32 @@
             this.labelAjoutLiaison.TabIndex = 0;
             this.labelAjoutLiaison.Text = "Durée";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(299, 228);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(44, 16);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "label2";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // listBoxTraversee
+            // 
+            this.listBoxTraversee.FormattingEnabled = true;
+            this.listBoxTraversee.ItemHeight = 16;
+            this.listBoxTraversee.Location = new System.Drawing.Point(687, 27);
+            this.listBoxTraversee.Name = "listBoxTraversee";
+            this.listBoxTraversee.Size = new System.Drawing.Size(399, 180);
+            this.listBoxTraversee.TabIndex = 6;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1135, 450);
+            this.ClientSize = new System.Drawing.Size(1135, 568);
+            this.Controls.Add(this.listBoxTraversee);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBoxAjoutLiaison);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBoxModifDuree);
@@ -224,6 +248,7 @@
             this.groupBoxAjoutLiaison.ResumeLayout(false);
             this.groupBoxAjoutLiaison.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -245,6 +270,8 @@
         private System.Windows.Forms.ComboBox selectPortArrivee;
         private System.Windows.Forms.Label labelPortArrivee;
         private System.Windows.Forms.ComboBox selectPortDepart;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ListBox listBoxTraversee;
     }
 }
 

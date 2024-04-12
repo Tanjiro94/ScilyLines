@@ -1,4 +1,4 @@
-﻿using bateau.Modele; // Importe l'espace de noms bateau.Modele pour utiliser la classe ConnexionSql
+﻿using bateau.Modele;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -11,12 +11,12 @@ namespace bateau.DAL
     public class PortDAO
     {
         private static string provider = "localhost";
-        private static string dataBase = "sicilylines";
+        private static string dataBase = "sicilylinesc";
         private static string uid = "root";
         private static string mdp = "";
 
-        private static ConnexionSql maConnexionSql; // Instance de la classe de connexion
-        private static MySqlCommand Ocom; // Objet de commande SQL
+        private static ConnexionSql maConnexionSql;
+        private static MySqlCommand Ocom;
 
         // Méthode pour récupérer la liste des ports depuis la base de données
         public static List<Port> GetPort()
@@ -25,34 +25,34 @@ namespace bateau.DAL
 
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp); // Récupération de l'instance de connexion
-                maConnexionSql.openConnection(); // Ouverture de la connexion à la base de données
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                maConnexionSql.openConnection(); 
 
-                Ocom = maConnexionSql.reqExec("Select * from port"); // Exécution d'une requête SQL pour récupérer tous les ports
+                Ocom = maConnexionSql.reqExec("Select * from port");
 
-                MySqlDataReader reader = Ocom.ExecuteReader(); // Exécution de la commande SQL et récupération des résultats dans un objet MySqlDataReader
+                MySqlDataReader reader = Ocom.ExecuteReader(); 
 
-                Port e; // Objet Port
+                Port e; 
 
-                while (reader.Read()) // Parcourt les résultats
+                while (reader.Read())
                 {
-                    // Récupération des données pour créer un nouvel objet Port
+                    
                     string nom = (string)reader.GetValue(1);
                     int id = (int)reader.GetValue(0);
 
-                    e = new Port(id, nom); // Création d'un nouvel objet Port
+                    e = new Port(id, nom);
 
-                    lc.Add(e); // Ajout de l'objet Port à la liste
+                    lc.Add(e);
                 }
 
-                reader.Close(); // Fermeture du lecteur après récupération des données
-                maConnexionSql.closeConnection(); // Fermeture de la connexion à la base de données
+                reader.Close();
+                maConnexionSql.closeConnection();
             }
             catch (Exception emp)
             {
-                throw (emp); // En cas d'erreur, lance une exception
+                throw (emp);
             }
-            return (lc); // Retourne la liste des ports récupérés depuis la base de données
+            return (lc);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using bateau.Modele; // Importe l'espace de noms bateau.Modele pour utiliser la classe ConnexionSql
+﻿using bateau.Modele;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -12,30 +12,30 @@ namespace bateau.DAL
     {
         // Attributs de connexion statiques
         private static string provider = "localhost";
-        private static string dataBase = "sicilylines";
+        private static string dataBase = "sicilylinesc";
         private static string uid = "root";
         private static string mdp = "";
 
-        private static ConnexionSql maConnexionSql; // Instance de la classe de connexion
-        private static MySqlCommand Ocom; // Objet de commande SQL
+        private static ConnexionSql maConnexionSql;
+        private static MySqlCommand Ocom;
 
         // Méthode pour supprimer un secteur
         public static void deleteSecteur(Secteur e)
         {
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp); // Récupération de l'instance de connexion
-                maConnexionSql.openConnection(); // Ouverture de la connexion à la base de données
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                maConnexionSql.openConnection();
 
-                Ocom = maConnexionSql.reqExec("delete from secteur where id = " + e.Id); // Exécution d'une requête SQL pour supprimer un secteur en fonction de son ID
+                Ocom = maConnexionSql.reqExec("delete from bateau where id = " + e.Id); 
 
-                int i = Ocom.ExecuteNonQuery(); // Exécution de la commande SQL
+                int i = Ocom.ExecuteNonQuery();
 
-                maConnexionSql.closeConnection(); // Fermeture de la connexion à la base de données
+                maConnexionSql.closeConnection();
             }
             catch (Exception unSecteur)
             {
-                throw (unSecteur); // En cas d'erreur, lance une exception
+                throw (unSecteur);
             }
         }
 
@@ -46,36 +46,34 @@ namespace bateau.DAL
 
             try
             {
-                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp); // Récupération de l'instance de connexion
-                maConnexionSql.openConnection(); // Ouverture de la connexion à la base de données
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                maConnexionSql.openConnection(); 
 
-                Ocom = maConnexionSql.reqExec("Select * from Secteur"); // Exécution d'une requête SQL pour récupérer tous les secteurs
+                Ocom = maConnexionSql.reqExec("Select * from Secteur");
 
-                MySqlDataReader reader = Ocom.ExecuteReader(); // Exécution de la commande SQL et récupération des résultats dans un objet MySqlDataReader
+                MySqlDataReader reader = Ocom.ExecuteReader();
 
-                Secteur e; // Objet Secteur
+                Secteur e; 
 
-                while (reader.Read()) // Parcourt les résultats
+                while (reader.Read()) 
                 {
-                    // Récupération des données pour créer un nouvel objet Secteur
+          
                     int numero = (int)reader.GetValue(0);
                     string nom = (string)reader.GetValue(1);
 
-                    // Instanciation d'un Secteur
                     e = new Secteur(numero, nom);
 
-                    // Ajout de ce secteur à la liste 
                     lc.Add(e);
                 }
 
-                reader.Close(); // Fermeture du lecteur après récupération des données
-                maConnexionSql.closeConnection(); // Fermeture de la connexion à la base de données
+                reader.Close();
+                maConnexionSql.closeConnection();
 
-                return (lc); // Retourne la liste des secteurs récupérés depuis la base de données
+                return (lc);
             }
             catch (Exception unSecteur)
             {
-                throw (unSecteur); // En cas d'erreur, lance une exception
+                throw (unSecteur); 
             }
         }
     }
